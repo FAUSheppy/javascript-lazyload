@@ -1,25 +1,4 @@
-/* determine which size of image to load */
-function getSize(){
-    trueRes = screen.width/window.devicePixelRatio
-	if(trueRes > 1920)
-        return ''
-    else if(trueRes <= 1920 && trueRes >= 1200)
-        return '-640x480'
-    else
-        return '-320x240'
-}
-
-
-/* check if browser is capable of webp */
-function supportsWebp() {
-  return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-  //if (!self.createImageBitmap) return false;
-  //const webpData = 'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=';
-  //return createImageBitmap(webpData).then(() => true, () => false);
-}
-
 /* cache */
-var webP = supportsWebp()
 var elements = null
 var counter = 0
 
@@ -44,22 +23,9 @@ function changeSrc(offset){
 
     for (var i = counter; i < elements.length; i++) {
             var boundingClientRect = elements[i].getBoundingClientRect();
-            if (elements[i].hasAttribute("rrealsrc") && boundingClientRect.top < window.innerHeight + offset) {
-				        var newSrc = elements[i].getAttribute("rrealsrc")
-                /* remove url( ... ) */
-				        newSrc = newSrc.substring(4,newSrc.length-1)
-                
-                if(newSrc.indexOf(".jpg") > -1){
-                    /* get correct size */
-                    newSrc += getSize()
-
-				    /* load webP if supported */
-				    if(webP){
-				    	newSrc = newSrc  + '.webp'
-				    }
-                }
-                elements[i].setAttribute("src", newSrc);
-                elements[i].style.backgroundImage = 'url(' + newSrc +')';
+            if (elements[i].hasAttribute("rrealsrc") 
+                    && boundingClientRect.top < window.innerHeight + offset) {
+                elements[i].style.backgroundImage = newSrc;
                 elements[i].removeAttribute("rrealsrc");
             }else{
                 /* DOM is parsed top down and images are inserted in that order too */
@@ -81,7 +47,6 @@ refresh_handler = function(e) {
 };
 
 /* add listeners */
-document.getElementById("main_scrollable").addEventListener('scroll', refresh_handler);
+window.addEventListener('scroll', refresh_handler);
 window.addEventListener('resize', refresh_handler);
 window.addEventListener('load', refresh_handler);
-getSize()
