@@ -18,15 +18,15 @@ function changeSrc(offset){
     
     /* cache */
     if(elements == null){
-        elements = document.querySelectorAll("*[rrealsrc]");
+        elements = document.querySelectorAll("*[realsrc]");
     }
 
     for (var i = counter; i < elements.length; i++) {
             var boundingClientRect = elements[i].getBoundingClientRect();
-            if (elements[i].hasAttribute("rrealsrc") 
+            if (elements[i].hasAttribute("realsrc") 
                     && boundingClientRect.top < window.innerHeight + offset) {
                 elements[i].style.backgroundImage = newSrc;
-                elements[i].removeAttribute("rrealsrc");
+                elements[i].removeAttribute("realsrc");
             }else{
                 /* DOM is parsed top down and images are inserted in that order too */
                 /* meaing that once we reach pic that insnt in viewbox none following will be*/
