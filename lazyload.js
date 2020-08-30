@@ -54,8 +54,8 @@ function changeSrc(offset){
                     && boundingClientRect.top < window.innerHeight + offset) {
 
                 var newSrc = elements[i].getAttribute(IDENT)
-                /* remove url( ... ) */
-                newSrc = newSrc.substring(4,newSrc.length-1)
+                /* remove url( ... ) if it is used */
+                //newSrc = newSrc.substring(4,newSrc.length-1)
 
                 if(newSrc.indexOf(".jpg") > -1){
                     /* get correct size */
