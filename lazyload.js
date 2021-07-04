@@ -28,6 +28,8 @@ var counter = 0
 var viewbox_y = -Infinity
 
 IDENT = "realsrc"
+WIDTH_LOCK = "LAZYLOAD_WIDTH"
+HEIGHT_LOCK = "LAZYLOAD_HEIGHT"
 
 /* function to load images */
 function changeSrc(offset){
@@ -53,12 +55,26 @@ function changeSrc(offset){
                     && boundingClientRect.top < window.innerHeight + offset) {
 
                 var newSrc = elements[i].getAttribute(IDENT)
+                var xWidth  = elements[i].getAttribute(WIDTH_LOCK)
+                var yHeight = elements[i].getAttribute(HEIGHT_LOCK)
+
                 /* remove url( ... ) if it is used */
                 //newSrc = newSrc.substring(4,newSrc.length-1)
 
                 if(newSrc.indexOf(".jpg") > -1){
-                    /* get correct size */
-                    newSrc += getSize()
+
+                    /* determine & set the correct width and height */
+                    if(xWidth || yHeight){
+                        if(xWidth !=null && xHeight != null){
+                                newSrc += "?scalex=" + xWidth + "&scaley=" + yHeight
+                        }else if(xWdith != null){
+                                newSrc += "?x=" + xWidth
+                        }else{
+                                newSrc += "?y=" + yHeight
+                        }
+                    }else{
+                        newSrc += getSize(newSrc)
+                    }
 
                     /* load webP if supported */
                     if(webP){
