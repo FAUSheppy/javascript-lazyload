@@ -35,7 +35,6 @@ function changeSrc(offset){
     /* check if there was a relevant change */
     var cur_viewbox = -document.getElementById("navbar").getBoundingClientRect().y
     if(cur_viewbox - viewbox_y < 100){
-        //console.log("lÃ¶l")
         return;
 
     }
